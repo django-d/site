@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 
     <!-- [[! Page Meta ]] -->
-    <title>2019年 - 新的开始</title>
+    <title>flutter与android原生交互遇到的问题</title>
     
     <meta name="description" content="这是我的个人博客" />
     
@@ -31,19 +31,19 @@
 
 <meta property="og:site_name" content="做人呢,最重要的是开心" />
 <meta property="og:type" content="website" />
-<meta property="og:title" content="2019年 - 新的开始" />
+<meta property="og:title" content="flutter与android原生交互遇到的问题" />
 
 <meta property="og:description" content="这是我的个人博客" />
 
-<meta property="og:url" content="http://localhost:4000/2019-summary" />
+<meta property="og:url" content="http://localhost:4000/:title" />
 <meta property="og:image" content="" />
 
 <meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:title" content="2019年 - 新的开始" />
+<meta name="twitter:title" content="flutter与android原生交互遇到的问题" />
 
 <meta name="twitter:description" content="这是我的个人博客" />
 
-<meta name="twitter:url" content="http://localhost:4000/2019-summary" />
+<meta name="twitter:url" content="http://localhost:4000/:title" />
 <meta name="twitter:image:src" content="" />
 
 <script type="application/ld+json">
@@ -51,7 +51,7 @@
     "@context": "http://schema.org",
     "@type": "Website",
     "publisher": "Django",
-    "url": "http://localhost:4000/2019-summary",
+    "url": "http://localhost:4000/:title",
     "image": "",
     "description": "这是我的个人博客"
   }
@@ -117,7 +117,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <ul>
         <li class="nav-home " role="presentation"><a
                 href="/">Home</a></li>
-        <li class="nav-hz " role="presentation"><a
+        <li class="nav-hz  nav-current" role="presentation"><a
                 href="/tag/flutter">Flutter</a></li>
         <li class="nav-blog " role="presentation"><a
                 href="/tag/blog">Blog</a></li>
@@ -161,16 +161,14 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <article class="post">
 
     <header class="post-template post-header">
-      <h1 class="post-title">2019年 - 新的开始</h1>
+      <h1 class="post-title">flutter与android原生交互遇到的问题</h1>
       <section class="post-meta">
-        <time class="post-date" datetime="2019-06-16">16 Jun 2019</time>
+        <time class="post-date" datetime="2019-06-24">24 Jun 2019</time>
         <!-- <a href='/'>Django</a> -->
         <!-- [[tags prefix=" on "]] -->
         
         
-        <a href='/tag/hz'>hz</a>
-        
-        <a href='/tag/summary'>summary</a>
+        <a href='/tag/flutter'>flutter</a>
         
         
       </section>
@@ -179,11 +177,17 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <section class="post-content">
 
       <ul class="section-nav">
-<li class="toc-entry toc-h2"><a href="#持续更新-ing">持续更新 Ing</a></li>
-</ul><h2 id="持续更新-ing">
-<a id="持续更新-ing" class="anchor" href="#%E6%8C%81%E7%BB%AD%E6%9B%B4%E6%96%B0-ing" aria-hidden="true"><span class="octicon octicon-link"></span></a>持续更新 Ing</h2>
+<li class="toc-entry toc-h2"><a href="#flutter-混合开发运行报错vm-snapshot-must-be-valid-check-failed-vm-must-be-able-to-initialize-the-vm">flutter 混合开发运行报错：VM snapshot must be valid. /Check failed: vm. Must be able to initialize the VM.</a></li>
+</ul><h2 id="flutter-混合开发运行报错vm-snapshot-must-be-valid-check-failed-vm-must-be-able-to-initialize-the-vm">
+<a id="flutter-混合开发运行报错vm-snapshot-must-be-valid-check-failed-vm-must-be-able-to-initialize-the-vm" class="anchor" href="#flutter-%E6%B7%B7%E5%90%88%E5%BC%80%E5%8F%91%E8%BF%90%E8%A1%8C%E6%8A%A5%E9%94%99vm-snapshot-must-be-valid-check-failed-vm-must-be-able-to-initialize-the-vm" aria-hidden="true"><span class="octicon octicon-link"></span></a>flutter 混合开发运行报错：VM snapshot must be valid. /Check failed: vm. Must be able to initialize the VM.</h2>
 
-<p>期待…..</p>
+<p><code>VM snapshot must be valid. Check failed: vm. Must be able to initialize the VM.</code></p>
+
+<p>gradle 根据 mainModuleName 去找 mergeAssets，如果 Android 项目没有配置 project.rootProject.ext.mainModuleName，就会默认用”app”这个名字去找 mergeAssets，而我们公司项目的 app module 的名字不是”app”，也没有配置 project.rootProject.ext.mainModuleName，所以没找到 mergeAssets，mergeAssets 为 null，就没有去执行 copyFlutterAssets。</p>
+
+<p>至此原因找到，在 Android project 根目录 build.gradle 配置下 mainModuleName，clean Android module 和 flutter module，重新编译运行，搞定</p>
+
+<p>这个问题阿里大佬也发现了 https://github.com/flutter/flutter/pull/27154</p>
 
 
       <h3>关于图片和转载</h3>
@@ -196,10 +200,10 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
       <h3>关于评论和留言</h3>
 
-      如果对本文 <a href="/2019-summary">2019年 - 新的开始</a> 的内容有疑问，请在下面的评论系统中留言，谢谢。
+      如果对本文 <a href="/:title">flutter与android原生交互遇到的问题</a> 的内容有疑问，请在下面的评论系统中留言，谢谢。
 
       <blockquote>
-        <p>原文链接：<a href="/2019-summary">2019年 - 新的开始 · 做人呢,最重要的是开心</a></p>
+        <p>原文链接：<a href="/:title">flutter与android原生交互遇到的问题 · 做人呢,最重要的是开心</a></p>
 
         <p>Follow: <a href="https://github.com/django-d">Django · GitHub</a></p>
       </blockquote>
@@ -237,16 +241,16 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <section class="share">
         <h4>Share this post</h4>
         <a class="icon-twitter"
-          href="http://twitter.com/share?text=2019年 - 新的开始&amp;url=http://localhost:40002019-summary"
+          href="http://twitter.com/share?text=flutter与android原生交互遇到的问题&amp;url=http://localhost:4000flutter-andro"
           onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
           <span class="hidden">Twitter</span>
         </a>
         <a class="icon-facebook"
-          href="https://www.facebook.com/sharer/sharer.php?u=http://localhost:40002019-summary"
+          href="https://www.facebook.com/sharer/sharer.php?u=http://localhost:4000flutter-andro"
           onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
           <span class="hidden">Facebook</span>
         </a>
-        <a class="icon-google-plus" href="https://plus.google.com/share?url=http://localhost:40002019-summary"
+        <a class="icon-google-plus" href="https://plus.google.com/share?url=http://localhost:4000flutter-andro"
           onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
           <span class="hidden">Google+</span>
         </a>
@@ -262,9 +266,9 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           repo: 'django-d.github.io',
           owner: 'django-d',
           admin: ['django-d'],
-          // labels: ['Gitalk', 'gitment'].concat(["hz","summary"]),
+          // labels: ['Gitalk', 'gitment'].concat(["flutter"]),
           // id: location.origin + location.pathname,
-          id: "http://www.djangofreeman.com/2019-summary",
+          id: "http://www.djangofreeman.com/flutter-andro",
           // facebook-like distraction free mode
           distractionFreeMode: true
         });
@@ -279,8 +283,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       var gitment = new Gitment({
           owner: 'Draveness',
           repo: 'blog-comments',
-          id: "http://www.djangofreeman.com/2019-summary",
-         // labels: ['Gitalk'].concat(["hz","summary"]),
+          id: "http://www.djangofreeman.com/flutter-andro",
+         // labels: ['Gitalk'].concat(["flutter"]),
           oauth: {
               client_id: '9b9309114bace01e2a7e',
               client_secret: '74e636d9c5ffbfeff0c5cdbe1471dce4eca75358',
@@ -299,24 +303,16 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
   <!-- [[! next_post ]] -->
   
-  <a class="read-next-story no-cover"
-    href="flutter-andro">
-    <section class="post">
-      <h2>flutter与android原生交互遇到的问题</h2>
-      <p>## flutter 混合开发运行报错：VM snapshot must be valid. /Check failed: vm. Must be able to initialize...</p>
-    </section>
-  </a>
-  
   <!-- [[! /next_post ]] -->
   <!-- [[! prev_post ]] -->
   
   <a class="read-next-story prev no-cover"
-    href="2019-nine">
+    href="2019-summary">
     <section class="post">
-      <h2>夜晚----</h2>
-      <p>日常更新 Ing
+      <h2>2019年 - 新的开始</h2>
+      <p>持续更新 Ing
 
-
+期待…..
 </p>
     </section>
   </a>
