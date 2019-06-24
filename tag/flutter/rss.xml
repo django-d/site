@@ -22,11 +22,18 @@
 
 <p><code>VM snapshot must be valid. Check failed: vm. Must be able to initialize the VM.</code></p>
 
-<p>gradle 根据 mainModuleName 去找 mergeAssets，如果 Android 项目没有配置 project.rootProject.ext.mainModuleName，就会默认用”app”这个名字去找 mergeAssets，而我们公司项目的 app module 的名字不是”app”，也没有配置 project.rootProject.ext.mainModuleName，所以没找到 mergeAssets，mergeAssets 为 null，就没有去执行 copyFlutterAssets。</p>
+<p>gradle 根据 mainModuleName 去找 mergeAssets，如果 Android 项目没有配置 project.rootProject.ext.mainModuleName，就会默认用”app”这个名字去找 mergeAssets，而我们公司项目的 app module 的名字不是”<code>app</code>“，也没有配置 project.rootProject.ext.mainModuleName，所以没找到 mergeAssets，mergeAssets 为 null，就没有去执行 copyFlutterAssets。</p>
 
 <p>至此原因找到，在 Android project 根目录 build.gradle 配置下 mainModuleName，clean Android module 和 flutter module，重新编译运行，搞定</p>
 
-<p>这个问题阿里大佬也发现了 https://github.com/flutter/flutter/pull/27154</p>
+<p>这个问题阿里大佬也发现了 <a href="https://github.com/flutter/flutter/pull/27154">阿里在 flutter 提交的 pr</a> 如下的 pr :</p>
+
+<p><code>include ':example' setBinding(new Binding([gradle: this, mainModuleName: 'example']))// new evaluate(new File( // new settingsDir.parentFile, // new 'my_flutter/.android/include_flutter.groovy' // new ))// new</code></p>
+
+<p>参考的 blog : <a href="https://blog.csdn.net/weixin_34413802/article/details/88174973">Android 原生页面跳转 flutter 页面时报错 Must be able to initialize the VM</a></p>
+
+<p>完成后如下 可以正常运行安卓项目了 :
+<img src="http://www.djangofreeman.com/assets/images/p/1561357881338.jpg" alt="非主流鼻祖" /></p>
 
   ]]></description>
 </item>
