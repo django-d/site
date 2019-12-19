@@ -20,9 +20,12 @@
   <description><![CDATA[
   <h2 id="持续更新-ing">持续更新 Ing</h2>
 
-<p>期待…..</p>
+<p>启动 blog 编辑服务</p>
 
-<p>运行 bundle exec jekyll serve 启动本地博客服务</p>
+<ul>
+  <li>export PATH=”/usr/local/opt/ruby/bin:$PATH”</li>
+  <li>运行 bundle exec jekyll serve 启动本地博客服务</li>
+</ul>
 
   ]]></description>
 </item>

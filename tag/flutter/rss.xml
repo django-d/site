@@ -32,8 +32,9 @@
 
 <p>参考的 blog : <a href="https://blog.csdn.net/weixin_34413802/article/details/88174973">Android 原生页面跳转 flutter 页面时报错 Must be able to initialize the VM</a></p>
 
-<p>完成后如下 可以正常运行安卓项目了 :
-<img src="http://www.djangofreeman.com/assets/images/p/1561357881338.jpg" alt="非主流鼻祖" /></p>
+<p>完成后如下 可以正常运行安卓项目了 :</p>
+
+<!-- ![非主流鼻祖](http://www.djangofreeman.com/assets/images/p/1561357881338.jpg) -->
 
   ]]></description>
 </item>
